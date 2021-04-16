@@ -1,4 +1,6 @@
-# Задания и примеры из книги "Основы asyncio для сетевых инженеров"
+# В процессе создания!
+
+## Задания и примеры из книги "Основы asyncio для сетевых инженеров"
 
 [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -20,8 +22,7 @@
 
 ## Задания
 
-В каталоге exercises находятся задания к курсу, отсортированные по разделам курса.
-Кроме того, там находятся все вспомогательные файлы (конфигурации и др), которые используются в заданиях.
+Еще не написаны
 
 ## Тесты
 
