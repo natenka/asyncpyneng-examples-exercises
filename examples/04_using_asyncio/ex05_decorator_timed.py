@@ -1,18 +1,13 @@
 import asyncio
 from datetime import datetime
-import netdev
-
-
-device_params = {
-    "device_type": "cisco_ios",
-    "host": "192.168.100.1",
-    "username": "cisco",
-    "password": "cisco",
-    "secret": "cisco",
-}
+from functools import wraps
+import yaml
+from scrapli import AsyncScrapli
+from scrapli.exceptions import ScrapliException
 
 
 def timecode(function):
+    @wraps(function)
     async def wrapper(*args, **kwargs):
         start_time = datetime.now()
         result = await function(*args, **kwargs)
@@ -23,12 +18,19 @@ def timecode(function):
 
 
 @timecode
-async def connect_ssh(device, command):
-    async with netdev.create(**device) as ssh:
-        await asyncio.sleep(5)
-        output = await ssh.send_command(command)
-    return output
+async def send_show(device, command):
+    try:
+        async with AsyncScrapli(**device) as conn:
+            result = await conn.send_command(command)
+            await asyncio.sleep(2)
+            return result.result
+    except ScrapliException as error:
+        print(error, device["host"])
 
 
 if __name__ == "__main__":
-    print(asyncio.run(connect_ssh(device_params, "sh clock")))
+    with open("devices_async.yaml") as f:
+        devices = yaml.safe_load(f)
+        r1 = devices[0]
+    result = asyncio.run(send_show(r1, "sh clock"))
+    print(result)
