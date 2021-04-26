@@ -53,7 +53,9 @@ async def main():
     with open("devices_asynctelnet.yaml") as f:
         devices_telnet = yaml.safe_load(f)
     ip_list = ["192.168.100.1", "8.8.8.8", "10.1.1.1"]
-    await asyncio.gather(scan(devices_ssh, "SSH"), scan(devices_telnet, "Telnet"), scan(ip_list, "ICMP"))
+    await asyncio.gather(
+        scan(devices_ssh, "SSH"), scan(devices_telnet, "Telnet"), scan(ip_list, "ICMP")
+    )
 
 
 if __name__ == "__main__":
